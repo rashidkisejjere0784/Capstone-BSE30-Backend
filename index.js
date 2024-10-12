@@ -20,7 +20,7 @@ app.use(
   }),
 );
 // Define the port variable
-const port = 3000;
+const port = 8080;
 
 // MongoDB connection URI
 const dbURI =

@@ -1,5 +1,5 @@
 const request = require('supertest');
-const { app, closeDatabase } = require('./server'); // Import app, server, and closeDatabase
+const { app, closeDatabase } = require('./index'); // Import app, server, and closeDatabase
 
 describe('Server running test', () => {
   let testServer; // Define server variable for the test suite

@@ -49,17 +49,17 @@ const SignUp = async (req, res) => {
     const { error, value } = joiSchema.validate(req.body);
 
     if (error) {
-      return res.status(400).json({ message: error.details[0].message });
+      return res.status(400).json({success: false, message: error.details[0].message });
     }
 
     if (value.confirm_password !== value.password) {
-      return res.status(400).json({ message: 'Passwords do not match' });
+      return res.status(400).json({success: false, message: 'Passwords do not match' });
     }
 
     // Check if the user already exists in the database by email (adjust this according to your DB logic)
     const existingUser = await User.collection.findOne({ email: value.email });
     if (existingUser) {
-      return res.status(400).json({ message: 'Email is already in use.' });
+      return res.status(400).json({success: false, message: 'Email is already in use.' });
     }
 
     // Hash the password before saving to the database
@@ -76,6 +76,7 @@ const SignUp = async (req, res) => {
       .then((response) => {
         if (response.acknowledged) {
           return res.status(200).json({
+            success: true,
             message: 'New user created successfully',
             userId: response.insertedId,
           });
@@ -86,7 +87,7 @@ const SignUp = async (req, res) => {
         throw new Error('Failed to sign up user');
       });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({success: false, message: error.message });
   }
 };
 
@@ -107,12 +108,12 @@ const SignIn = async (req, res) => {
     const { error, value } = joiSchema.validate(req.body);
 
     if (error) {
-      return res.status(400).json({ message: error.details[0].message });
+      return res.status(400).json({success: false, message: error.details[0].message });
     }
 
     const existingUser = await User.collection.findOne({ email: value.email });
     if (!existingUser) {
-      return res.status(400).json({ message: 'Invalid email or password' });
+      return res.status(400).json({success: false, message: 'Invalid email or password' });
     }
 
     // Compare the provided password with the hashed password in the database
@@ -121,18 +122,22 @@ const SignIn = async (req, res) => {
       existingUser.password,
     );
     if (!validPassword) {
-      return res.status(400).json({ message: 'Invalid email or password' });
+      return res.status(400).json({ success: false, message: 'Invalid email or password' });
     }
 
-    const jwtSecret = 'this is the secret key';
-
     const token = jwt.sign(
-      { id: existingUser._id, role: existingUser.role },
-      jwtSecret,
-      { expiresIn: '1h' },
+      {
+        id: existingUser._id,
+        role: existingUser.role,
+        email: existingUser.email,
+        name: existingUser.name,
+      },
+      'CLIENT_SECRET_KEY',
+      { expiresIn: '60m' },
     );
 
-    return res.status(200).json({
+    res.cookie("token", token, { httpOnly: true, secure: false }).json({
+      succes: true,
       message: 'Sign in successful',
       token,
       user: {
@@ -144,11 +149,46 @@ const SignIn = async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({
+      success: false,
+      message: error.message
+    });
   }
 };
+
+
+const logoutUser = (req, res) => {
+  res.clearCookie("token").json({
+    success: true,
+    message: "Logged out successfully!",
+  });
+};
+
+
+const authMiddleware = async (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token)
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorised user!",
+    });
+
+  try {
+    req.user = jwt.verify(token, "CLIENT_SECRET_KEY");
+    next();
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: "Unauthorised user!",
+    });
+  }
+};
+
+
 
 module.exports = {
   SignUp,
   SignIn,
+  authMiddleware,
+  logoutUser
 };

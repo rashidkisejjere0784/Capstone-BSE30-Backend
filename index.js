@@ -3,28 +3,18 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const routes = require('./routes');
-
-const ORIGIN = 'http://localhost:5173';
 
 dotenv.config();
 
 const app = express();
-app.use(express.json());
-mongoose.set('debug', true);
-app.use(
-  cors({
-    origin: ORIGIN,
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type'],
-  }),
-);
-// Define the port variable
-const port = 8080;
-
-// MongoDB connection URI
+const port = 3000;
 const dbURI =
   'mongodb+srv://user123:user123@capstonebackend.o78na.mongodb.net/capstone-backend?retryWrites=true&w=majority';
+
+mongoose.set('debug', true);
+// MongoDB connection URI
 
 // Connect to MongoDB
 mongoose
@@ -36,6 +26,23 @@ mongoose
     });
   })
   .catch((error) => console.log('Connection error:', error));
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+    methods: ['GET', 'POST', 'DELETE', 'PUT'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Cache-Control',
+      'Expires',
+      'Pragma',
+    ],
+    credentials: true,
+  }),
+);
+
+app.use(cookieParser());
+app.use(express.json());
 
 // Define API routes
 app.use('/api', routes);

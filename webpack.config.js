@@ -8,7 +8,7 @@ module.exports = {
   externals: [nodeExternals()], // Ignore node_modules for backend bundling
   output: {
     path: path.resolve(__dirname, 'dist'), // Output directory
-    filename: 'index.js', // Output bundle file
+    filename: 'server.js', // Output bundle file
   },
   module: {
     rules: [

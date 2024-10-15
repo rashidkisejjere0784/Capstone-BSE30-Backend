@@ -63,8 +63,8 @@ jobs:
 
       - name: Create product_images and products sub directories in upload directories
         run: |
-          mkdir -p /home/site/wwwroot/upload/product_images
-          mkdir -p /home/site/wwwroot/upload/products
+          mkdir -p upload/product_images
+          mkdir -p upload/products
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp

@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const path = require('path');
 const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const cors = require('cors');
@@ -8,8 +9,9 @@ const routes = require('./routes');
 const ORIGIN = 'http://localhost:5173';
 
 dotenv.config();
-
+const dir = path.join(__dirname, '/uploads');
 const app = express();
+app.use('/uploads', express.static(dir));
 app.use(express.json());
 mongoose.set('debug', true);
 app.use(
@@ -20,7 +22,7 @@ app.use(
   }),
 );
 // Define the port variable
-const port = 8080;
+const port = process.env.PORT;
 
 // MongoDB connection URI
 const dbURI =

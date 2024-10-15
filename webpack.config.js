@@ -3,7 +3,7 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-  entry: './index.js', // Main entry point for your backend code
+  entry: './server.js', // Main entry point for your backend code
   target: 'node', // Target platform is Node.js
   externals: [nodeExternals()], // Ignore node_modules for backend bundling
   output: {

@@ -61,6 +61,11 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_15C564EB7C9241A1B74163B277924F80 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A1CA9ED9137D4196B69D0F6CA78CD3F9 }}
 
+      - name: Create product_images and products sub directories in upload directories
+        run: |
+          mkdir -p /home/site/wwwroot/upload/product_images
+          mkdir -p /home/site/wwwroot/upload/products
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3

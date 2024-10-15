@@ -66,5 +66,5 @@ jobs:
         with:
           app-name: 'capstone-backend-bse30'
           slot-name: 'Production'
-          package: ./dist/
+          package: .
           

@@ -10,7 +10,7 @@ const addCategory = async (req, res) => {
     const userRole = req.user.role;
 
     if (userRole !== 'admin') {
-      return res.status(403).json({ message: 'Forbidden' });
+      return res.status(403).json({success: false, message: 'Forbidden' });
     }
 
     const joiSchema = Joi.object({
@@ -32,13 +32,13 @@ const addCategory = async (req, res) => {
         user_id: userId,
       })
       .then(() => {
-        res.status(200).json({ message: 'Category added successfully' });
+        res.status(200).json({success: true, message: 'Category added successfully' });
       })
       .catch((err) => {
-        res.status(400).json({ message: 'Unable to create product' });
+        res.status(400).json({success:false, message: 'Unable to create product' });
       });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({success: false, message: error.message });
   }
 };
 
@@ -63,7 +63,7 @@ const editCategory = async (req, res) => {
     const userRole = req.user.role;
 
     if (userRole !== 'admin') {
-      return res.status(403).json({ message: 'Forbidden Access' });
+      return res.status(403).json({success: false, message: 'Forbidden Access' });
     }
 
     const joiSchema = Joi.object({
@@ -83,7 +83,7 @@ const editCategory = async (req, res) => {
     if (error) {
       return res
         .status(400)
-        .json({ errors: error.details.map((e) => e.message) });
+        .json({success: false, errors: error.details.map((e) => e.message) });
     }
 
     const { name, description, CategoryId } = value;
@@ -95,14 +95,14 @@ const editCategory = async (req, res) => {
 
     // Check if the Category was updated
     if (result.matchedCount === 0) {
-      return res.status(404).json({ message: 'Category not found' });
+      return res.status(404).json({success: false, message: 'Category not found' });
     }
 
     // Return success message
-    return res.status(200).json({ message: 'Category updated successfully' });
+    return res.status(200).json({success: true, message: 'Category updated successfully' });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({success: false, message: error.message });
   }
 };
 
@@ -119,11 +119,13 @@ const deleteCategory = async (req, res) => {
       }),
     });
 
+    console.log(userRole)
+
     const { error, value } = joiSchema.validate(req.body);
     if (error) {
       return res
         .status(400)
-        .json({ errors: error.details.map((e) => e.message) });
+        .json({success: false, errors: error.details.map((e) => e.message) });
     }
     const { CategoryId } = value;
 
@@ -138,9 +140,9 @@ const deleteCategory = async (req, res) => {
     }
 
     // Success response
-    return res.status(200).json({ message: 'Category deleted successfully' });
+    return res.status(200).json({success: true, message: 'Category deleted successfully' });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({success: false, message: error.message });
   }
 };
 

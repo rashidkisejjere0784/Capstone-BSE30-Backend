@@ -2,10 +2,13 @@ const jwt = require('jsonwebtoken');
 
 // Middleware to check the validity of the token
 const verifyToken = (req, res, next) => {
-  let token = req.header('Authorization');
-  if (token) {
-    token = token.replace('Bearer ', '');
-  }
+  // let token = req.header('Authorization');
+  const token = req.cookies.token
+
+  // if (token) {
+  //   token = token.replace('Bearer ', '');
+  // }
+  console.log(token)
 
   if (!token) {
     return res
@@ -15,7 +18,7 @@ const verifyToken = (req, res, next) => {
 
   try {
     // Verify the token with the secret key
-    const secretKey = 'this is the secret key';
+    const secretKey = 'CLIENT_SECRET_KEY';
     const decoded = jwt.verify(token, secretKey);
 
     req.user = decoded;
@@ -24,6 +27,7 @@ const verifyToken = (req, res, next) => {
   } catch (err) {
     return res.status(400).json({ message: 'Invalid token.' });
   }
+
 };
 
 module.exports = verifyToken;

@@ -5,6 +5,7 @@ const Product = require('../models/ProductModel');
 const addProduct = async (req, res) => {
   try {
     const userRole = req.user.role;
+    const url = process.env.URL;
 
     if (userRole !== 'admin') {
       return res.status(403).json({ message: 'Forbidden' });
@@ -14,6 +15,8 @@ const addProduct = async (req, res) => {
     if (!req.file) {
       return res.status(400).json({ message: 'Product image is required' });
     }
+
+    console.log(req.file.filename);
 
     // Define the Joi validation schema for the product fields
     const joiSchema = Joi.object({
@@ -84,7 +87,7 @@ const addProduct = async (req, res) => {
       availability,
       quantity,
       brand_id: new mongoose.Types.ObjectId(brandId),
-      product_image: req.file.path, // Use the path of the uploaded file
+      product_image: `${url}/uploads/products/${req.file.filename}`, // Use the path of the uploaded file
       colors,
       rating,
       createdAt: new Date(),

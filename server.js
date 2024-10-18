@@ -10,24 +10,9 @@ const routes = require('./routes');
 dotenv.config();
 const dir = path.join(__dirname, '/uploads');
 const app = express();
-<<<<<<< HEAD:index.js
 const port = 3000;
-=======
 app.use('/uploads', express.static(dir));
-app.use(express.json());
-mongoose.set('debug', true);
-app.use(
-  cors({
-    origin: ORIGIN,
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type'],
-  }),
-);
-// Define the port variable
-const port = process.env.PORT;
 
-// MongoDB connection URI
->>>>>>> main:server.js
 const dbURI =
   'mongodb+srv://user123:user123@capstonebackend.o78na.mongodb.net/capstone-backend?retryWrites=true&w=majority';
 

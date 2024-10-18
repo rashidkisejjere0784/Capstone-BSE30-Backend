@@ -1,9 +1,11 @@
 const express = require('express');
+const path = require('path');
 const ProductController = require('../Controllers/productController');
 const authMiddleware = require('../middleware/authMiddleware');
 const fileUpload = require('../utils/fileUpload');
 
-const upload = fileUpload('./uploads/products/');
+const filePath = path.join('uploads', 'products');
+const upload = fileUpload(filePath);
 const route = express.Router();
 
 route.post(

@@ -6,6 +6,7 @@ const ProductImage = require('../models/ProductImageModel');
 const addProductImage = async (req, res) => {
   try {
     const userRole = req.user.role;
+    const url = process.env.URL;
 
     if (userRole !== 'admin') {
       return res.status(403).json({ message: 'Forbidden' });
@@ -37,7 +38,7 @@ const addProductImage = async (req, res) => {
     // Create a new product object
     const newProductImage = {
       product_id: new mongoose.Types.ObjectId(productId),
-      image_path: req.file.path,
+      image_path: `${url}/uploads/product_images/${req.file.filename}`,
       createdAt: new Date(),
       updatedAt: new Date(),
     };

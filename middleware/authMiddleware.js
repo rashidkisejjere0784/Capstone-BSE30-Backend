@@ -2,12 +2,12 @@ const jwt = require('jsonwebtoken');
 
 // Middleware to check the validity of the token
 const verifyToken = (req, res, next) => {
-  // let token = req.header('Authorization');
-  const token = req.cookies.token
+  let token = req.header('Authorization');
+  // const token = req.cookies.token
 
-  // if (token) {
-  //   token = token.replace('Bearer ', '');
-  // }
+  if (token) {
+    token = token.replace('Bearer ', '');
+  }
   console.log(token)
 
   if (!token) {

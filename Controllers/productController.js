@@ -265,7 +265,7 @@ const deleteProduct = async (req, res) => {
 
     // Only admins can delete products
     if (userRole !== 'admin') {
-      return res.status(403).json({ message: 'Forbidden' });
+      return res.status(403).json({success: false, message: 'Forbidden' });
     }
 
     const joiSchema = Joi.object({
@@ -289,7 +289,7 @@ const deleteProduct = async (req, res) => {
       _id: new mongoose.Types.ObjectId(productId),
     });
     if (!existingProduct) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({success: false, message: 'Product not found' });
     }
 
     // Delete the product from the collection
@@ -299,15 +299,16 @@ const deleteProduct = async (req, res) => {
 
     if (result.deletedCount > 0) {
       return res.status(200).json({
+        success: true,
         message: 'Product deleted successfully',
       });
     }
 
-    return res.status(400).json({ message: 'Error deleting product' });
+    return res.status(400).json({success: false, message: 'Error deleting product' });
   } catch (error) {
     // Handle any server errors
     console.log(error);
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({success: false, message: error.message });
   }
 };
 

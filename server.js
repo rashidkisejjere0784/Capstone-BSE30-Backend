@@ -10,7 +10,7 @@ const routes = require('./routes');
 dotenv.config();
 const dir = path.join(__dirname, '/uploads');
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 app.use('/uploads', express.static(dir));
 
 const dbURI =

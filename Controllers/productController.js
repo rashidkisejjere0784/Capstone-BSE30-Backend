@@ -47,12 +47,19 @@ const addProduct = async (req, res) => {
       brandId: Joi.string()
         .required()
         .messages({ 'string.empty': 'Brand ID is required' }),
-      colors: Joi.array().items(Joi.string().required()).required().messages({
-        'array.includesRequiredUnknowns': 'At least one color is required',
-      }),
-      rating: Joi.array().items(Joi.number().required()).required().messages({
-        'array.includesRequiredUnknowns': 'At least one rating is required',
-      }),
+      colors: Joi.array()
+        .items(Joi.string())
+        .default(['None']) // Default value for colors
+        .messages({
+          'array.includesRequiredUnknowns': 'At least one color is required',
+        }),
+
+      rating: Joi.array()
+        .items(Joi.number())
+        .default([0]) // Default value for rating
+        .messages({
+          'array.includesRequiredUnknowns': 'At least one rating is required',
+        }),
     });
 
     // Validate the incoming request body

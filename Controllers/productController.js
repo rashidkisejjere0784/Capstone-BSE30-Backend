@@ -178,12 +178,19 @@ const editProduct = async (req, res) => {
       brandId: Joi.string().messages({
         'string.empty': 'Brand ID is required',
       }),
-      colors: Joi.array().items(Joi.string().required()).messages({
-        'array.includesRequiredUnknowns': 'At least one color is required',
-      }),
-      rating: Joi.array().items(Joi.number().required()).messages({
-        'array.includesRequiredUnknowns': 'At least one rating is required',
-      }),
+      colors: Joi.array()
+        .items(Joi.string())
+        .default(['None']) // Default value for colors
+        .messages({
+          'array.includesRequiredUnknowns': 'At least one color is required',
+        }),
+
+      rating: Joi.array()
+        .items(Joi.number())
+        .default([0]) // Default value for rating
+        .messages({
+          'array.includesRequiredUnknowns': 'At least one rating is required',
+        }),
     });
 
     // Validate the incoming request body
@@ -265,7 +272,7 @@ const deleteProduct = async (req, res) => {
 
     // Only admins can delete products
     if (userRole !== 'admin') {
-      return res.status(403).json({success: false, message: 'Forbidden' });
+      return res.status(403).json({ success: false, message: 'Forbidden' });
     }
 
     const joiSchema = Joi.object({
@@ -289,7 +296,9 @@ const deleteProduct = async (req, res) => {
       _id: new mongoose.Types.ObjectId(productId),
     });
     if (!existingProduct) {
-      return res.status(404).json({success: false, message: 'Product not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'Product not found' });
     }
 
     // Delete the product from the collection
@@ -304,11 +313,13 @@ const deleteProduct = async (req, res) => {
       });
     }
 
-    return res.status(400).json({success: false, message: 'Error deleting product' });
+    return res
+      .status(400)
+      .json({ success: false, message: 'Error deleting product' });
   } catch (error) {
     // Handle any server errors
     console.log(error);
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 

@@ -10,7 +10,7 @@ const addBrand = async (req, res) => {
     const userRole = req.user.role;
 
     if (userRole !== 'admin') {
-      return res.status(403).json({success: false, message: 'Forbidden' });
+      return res.status(403).json({ success: false, message: 'Forbidden' });
     }
 
     const joiSchema = Joi.object({
@@ -32,13 +32,17 @@ const addBrand = async (req, res) => {
         user_id: userId,
       })
       .then(() => {
-        res.status(200).json({success: true, message: 'Brand added successfully' });
+        res
+          .status(200)
+          .json({ success: true, message: 'Brand added successfully' });
       })
       .catch((err) => {
-        res.status(400).json({success: false, message: 'Unable to create product' });
+        res
+          .status(400)
+          .json({ success: false, message: 'Unable to create product' });
       });
   } catch (error) {
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -51,10 +55,12 @@ const getAllBrands = async (req, res) => {
         res.status(200).json(brands);
       })
       .catch((err) => {
-        res.status(400).json({success: false, message: 'Unable to get brands' });
+        res
+          .status(400)
+          .json({ success: false, message: 'Unable to get brands' });
       });
   } catch (error) {
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -63,7 +69,9 @@ const editBrand = async (req, res) => {
     const userRole = req.user.role;
 
     if (userRole !== 'admin') {
-      return res.status(403).json({success: false, message: 'Forbidden Access' });
+      return res
+        .status(403)
+        .json({ success: false, message: 'Forbidden Access' });
     }
 
     const joiSchema = Joi.object({
@@ -95,14 +103,18 @@ const editBrand = async (req, res) => {
 
     // Check if the brand was updated
     if (result.matchedCount === 0) {
-      return res.status(404).json({success: false, message: 'Brand not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'Brand not found' });
     }
 
     // Return success message
-    return res.status(200).json({success: true, message: 'Brand updated successfully' });
+    return res
+      .status(200)
+      .json({ success: true, message: 'Brand updated successfully' });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -110,7 +122,9 @@ const deleteBrand = async (req, res) => {
   try {
     const userRole = req.user.role;
     if (userRole !== 'admin') {
-      return res.status(403).json({success: false, message: 'Forbidden Access' });
+      return res
+        .status(403)
+        .json({ success: false, message: 'Forbidden Access' });
     }
 
     const joiSchema = Joi.object({
@@ -134,13 +148,17 @@ const deleteBrand = async (req, res) => {
 
     // If no document was deleted, return a 404 error
     if (result.deletedCount === 0) {
-      return res.status(404).json({success: false, message: 'Brand not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'Brand not found' });
     }
 
     // Success response
-    return res.status(200).json({success: true, message: 'Brand deleted successfully' });
+    return res
+      .status(200)
+      .json({ success: true, message: 'Brand deleted successfully' });
   } catch (error) {
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 

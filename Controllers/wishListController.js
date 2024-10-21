@@ -93,8 +93,6 @@ const editWishList = async (req, res) => {
 
 const deleteWishList = async (req, res) => {
   try {
-    const user_id = req.user.id;
-
     const joiSchema = Joi.object({
       wishListId: Joi.string().required().messages({
         'string.empty': 'WishList ID is required',

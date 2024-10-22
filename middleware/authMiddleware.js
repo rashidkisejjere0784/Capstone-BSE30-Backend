@@ -8,7 +8,7 @@ const verifyToken = (req, res, next) => {
   if (token) {
     token = token.replace('Bearer ', '');
   }
-  console.log(token)
+  console.log(token);
 
   if (!token) {
     return res
@@ -27,7 +27,6 @@ const verifyToken = (req, res, next) => {
   } catch (err) {
     return res.status(400).json({ message: 'Invalid token.' });
   }
-
 };
 
 module.exports = verifyToken;

@@ -24,13 +24,17 @@ const addWishList = async (req, res) => {
         user_id: userId,
       })
       .then(() => {
-        res.status(200).json({success: true, message: 'WishList added successfully' });
+        res
+          .status(200)
+          .json({ success: true, message: 'WishList added successfully' });
       })
       .catch((err) => {
-        res.status(400).json({success: false, message: 'Unable to create product' });
+        res
+          .status(400)
+          .json({ success: false, message: 'Unable to create product' });
       });
   } catch (error) {
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -43,10 +47,12 @@ const getAllWishLists = async (req, res) => {
         res.status(200).json(wishList);
       })
       .catch((err) => {
-        res.status(400).json({success: false, message: 'Unable to get WishLists' });
+        res
+          .status(400)
+          .json({ success: false, message: 'Unable to get WishLists' });
       });
   } catch (error) {
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -80,14 +86,18 @@ const editWishList = async (req, res) => {
 
     // Check if the WishList was updated
     if (result.matchedCount === 0) {
-      return res.status(404).json({success: false, message: 'WishList not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'WishList not found' });
     }
 
     // Return success message
-    return res.status(200).json({success: true, message: 'WishList updated successfully' });
+    return res
+      .status(200)
+      .json({ success: true, message: 'WishList updated successfully' });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -114,13 +124,17 @@ const deleteWishList = async (req, res) => {
 
     // If no document was deleted, return a 404 error
     if (result.deletedCount === 0) {
-      return res.status(404).json({success: false, message: 'WishList not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'WishList not found' });
     }
 
     // Success response
-    return res.status(200).json({success: true, message: 'WishList deleted successfully' });
+    return res
+      .status(200)
+      .json({ success: true, message: 'WishList deleted successfully' });
   } catch (error) {
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 

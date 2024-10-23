@@ -4,7 +4,6 @@ const path = require('path');
 const mongoose = require('mongoose');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
 const routes = require('./routes');
 
 dotenv.config();
@@ -44,7 +43,6 @@ app.use(
   }),
 );
 
-app.use(cookieParser());
 app.use(express.json());
 
 // Define API routes

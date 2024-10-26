@@ -176,14 +176,14 @@ const logoutUser = (req, res) => {
 };
 
 const authMiddleware = async (req, res, next) => {
-  const { token } = req.cookies;
-  if (!token)
-    return res.status(401).json({
-      success: false,
-      message: 'Unauthorised user!',
-    });
-
   try {
+    const { token } = req.cookies;
+    if (!token)
+      return res.status(401).json({
+        success: false,
+        message: 'Unauthorised user!',
+      });
+
     req.user = jwt.verify(token, 'CLIENT_SECRET_KEY');
     next();
   } catch (error) {

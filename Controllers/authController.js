@@ -149,7 +149,7 @@ const SignIn = async (req, res) => {
     );
 
     res.cookie('token', token, { httpOnly: true, secure: false }).json({
-      succes: true,
+      success: true,
       message: 'Sign in successful',
       token,
       user: {
@@ -175,28 +175,9 @@ const logoutUser = (req, res) => {
   });
 };
 
-const authMiddleware = async (req, res, next) => {
-  const { token } = req.cookies;
-  if (!token)
-    return res.status(401).json({
-      success: false,
-      message: 'Unauthorised user!',
-    });
-
-  try {
-    req.user = jwt.verify(token, 'CLIENT_SECRET_KEY');
-    next();
-  } catch (error) {
-    res.status(401).json({
-      success: false,
-      message: 'Unauthorised user!',
-    });
-  }
-};
 
 module.exports = {
   SignUp,
   SignIn,
-  authMiddleware,
   logoutUser,
 };

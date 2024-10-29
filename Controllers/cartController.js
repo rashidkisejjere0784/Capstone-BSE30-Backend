@@ -30,7 +30,9 @@ const addToCart = async (req, res) => {
     });
 
     if (!product) {
-      return res.status(404).json({success: false, message: 'Product not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'Product not found' });
     }
 
     if (product.quantity < quantity) {
@@ -72,9 +74,9 @@ const addToCart = async (req, res) => {
 
     return res
       .status(200)
-      .json({success: true, message: 'Product added to cart successfully' });
+      .json({ success: true, message: 'Product added to cart successfully' });
   } catch (error) {
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -86,7 +88,9 @@ const getCartItems = async (req, res) => {
       .toArray();
 
     if (cartItems.length === 0) {
-      return res.status(404).json({success: false, message: 'No products found in the cart' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'No products found in the cart' });
     }
 
     // Step 2: For each cart item, get the product details from ProductModel.collection
@@ -105,9 +109,9 @@ const getCartItems = async (req, res) => {
       }
     }
 
-    return res.status(200).json({success: true, products: productsInCart });
+    return res.status(200).json({ success: true, products: productsInCart });
   } catch (error) {
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -121,7 +125,9 @@ const deleteCartItem = async (req, res) => {
 
     const { error, value } = joiSchema.validate(req.body);
     if (error)
-      return res.status(400).json({success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
 
     const { productId } = value;
 
@@ -131,16 +137,19 @@ const deleteCartItem = async (req, res) => {
     });
 
     if (!cartItem) {
-      return res.status(404).json({success: false, message: 'Product not found in the cart' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'Product not found in the cart' });
     }
 
     await CartModel.collection.deleteOne({ _id: cartItem._id });
 
-    return res
-      .status(200)
-      .json({success: true, message: 'Product removed from cart successfully' });
+    return res.status(200).json({
+      success: true,
+      message: 'Product removed from cart successfully',
+    });
   } catch (error) {
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -153,7 +162,9 @@ const checkoutCartItem = async (req, res) => {
     });
     const { error, value } = joiSchema.validate(req.body);
     if (error)
-      return res.status(400).json({success: false, message: error.details[0].message });
+      return res
+        .status(400)
+        .json({ success: false, message: error.details[0].message });
 
     const { cartId } = value;
 
@@ -163,7 +174,9 @@ const checkoutCartItem = async (req, res) => {
     });
 
     if (!cartItem) {
-      return res.status(404).json({success: false, message: 'Cart item not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: 'Cart item not found' });
     }
 
     const product = await ProductModel.collection.findOne({
@@ -171,9 +184,10 @@ const checkoutCartItem = async (req, res) => {
     });
 
     if (!product) {
-      return res
-        .status(404)
-        .json({success: false, message: 'Product associated with cart item not found' });
+      return res.status(404).json({
+        success: false,
+        message: 'Product associated with cart item not found',
+      });
     }
 
     if (product.quantity < cartItem.quantity) {
@@ -191,11 +205,12 @@ const checkoutCartItem = async (req, res) => {
     // remove product from cart
     await CartModel.collection.deleteOne({ _id: cartItem._id });
 
-    return res
-      .status(200)
-      .json({success: true, message: 'Checkout successful, product stock updated' });
+    return res.status(200).json({
+      success: true,
+      message: 'Checkout successful, product stock updated',
+    });
   } catch (error) {
-    return res.status(500).json({success: false, message: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 

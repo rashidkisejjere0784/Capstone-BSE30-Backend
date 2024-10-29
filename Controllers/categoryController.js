@@ -47,7 +47,6 @@ const addCategory = async (req, res) => {
 };
 
 const getAllCategories = async (req, res) => {
-  console.log('Getting categorues')
   try {
     Category.collection
       .find()

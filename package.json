@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@azure/storage-blob": "^12.25.0",
     "@types/cookie-parser": "^1.4.7",
     "babel": "^6.23.0",
     "back-end": "file:",

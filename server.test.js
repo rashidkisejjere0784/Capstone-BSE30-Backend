@@ -1,4 +1,5 @@
 const request = require('supertest');
+// eslint-disable-next-line import/no-unresolved
 const { app, closeDatabase } = require('./index'); // Import app, server, and closeDatabase
 
 describe('Server running test', () => {

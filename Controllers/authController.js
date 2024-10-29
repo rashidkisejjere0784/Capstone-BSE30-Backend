@@ -175,7 +175,6 @@ const logoutUser = (req, res) => {
   });
 };
 
-
 module.exports = {
   SignUp,
   SignIn,

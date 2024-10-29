@@ -80,9 +80,7 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A1CA9ED9137D4196B69D0F6CA78CD3F9 }}
 
       - name: Create product_images and products sub directories in upload directories
-        run: |
-          mkdir -p upload/product_images
-          mkdir -p upload/products
+        run: npm install
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp

@@ -30,7 +30,7 @@ mongoose
   .catch((error) => console.log('Connection error:', error));
 app.use(
   cors({
-    origin: '*',
+    origin: [process.env.FRONTEND_SERVER, process.env.FRONTEND_SERVER, '*'],
     methods: ['GET', 'POST', 'DELETE', 'PUT'],
     allowedHeaders: [
       'Content-Type',

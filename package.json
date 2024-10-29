@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack",
     "test": "npm run lint",
+    "type": "module",
     "start": "node server.js",
     "dev": "nodemon server.js",
     "lint": "eslint . --ext .js,.jsx",
@@ -15,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@azure/storage-blob": "^12.25.0",
+    "@azure/storage-blob": "^12.10.0",
     "@types/cookie-parser": "^1.4.7",
     "babel": "^6.23.0",
     "back-end": "file:",

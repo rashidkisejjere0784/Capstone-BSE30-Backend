@@ -5,7 +5,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 const fileUpload = require('../utils/fileUpload');
 
 const filePath = path.join('uploads', 'products');
-const upload = fileUpload(filePath);
+const upload = fileUpload();
 const route = express.Router();
 
 route.post(

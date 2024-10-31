@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a full-featured **E-commerce system** developed using **Node.js** (with the Express framework) for the back-end, **React** for the front-end, and **MongoDB** as the database for data storage. The system supports user authentication, product management, cart functionalities, and an admin interface to manage purchases and products.
+This is a full-featured **E-commerce system** developed using **Node.js** (with the Express framework) for the back-end, **React** for the front-end, and **MongoDB** as the database for data storage. The system supports user authentication, product management, cart functionalities, and an admin interface to manage purchases and productsby adding and deleting products.
 
 ## Features
 
@@ -17,13 +17,12 @@ This is a full-featured **E-commerce system** developed using **Node.js** (with 
    - **Add to Cart**: Add multiple products to the shopping cart.
    - **Update Cart**: Modify product quantities or remove items from the cart.
    - **Checkout**: Secure checkout for completing orders.
-   - **View Orders**: View past orders and their statuses.
 
 ### **Admin Features**:
 1. **Admin UI**: Dashboard interface for managing the system.
 2. **Product Management**:
    - **Add Products**: Admins can add new products to the store.
-   - **Edit Products**: Modify existing product details.
+   - **Edit Products**: Modify existing product details by the admin.
    - **Delete Products**: Remove products from the store.
 3. **Purchase Approvals**:
    - Approve or decline purchases made by users.
@@ -41,10 +40,31 @@ This is a full-featured **E-commerce system** developed using **Node.js** (with 
 ### **Database**:
 - **MongoDB**: Document-based NoSQL database
 
-
-## Installation
-
 ### Prerequisites:
 - Node.js installed
 - MongoDB installed or use a cloud provider like MongoDB Atlas
 
+
+## Installation
+1. **Clone the repository:**
+
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
+   
+2. **Initialize npm(only required if package.json doesnot exists):**
+   npm init -y
+
+3. ***Install dependencies**
+   npm install
+
+4. **Set up the environment variables:**
+   Create a .env file in the root directory.
+   Add any necessary environment variables as required by the project.
+   Common variables might include:
+   PORT= 3000
+   MONGO_URI= "localhost:3000"
+
+5. **Run the project**
+   npm start
+   npm run dev

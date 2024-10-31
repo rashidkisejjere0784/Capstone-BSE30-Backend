@@ -53,18 +53,18 @@ This is a full-featured **E-commerce system** developed using **Node.js** (with 
    cd <repository-directory>
    
 2. **Initialize npm(only required if package.json doesnot exists):**
-   npm init -y
+   - npm init -y
 
 3. ***Install dependencies**
-   npm install
+   - npm install
 
 4. **Set up the environment variables:**
-   Create a .env file in the root directory.
-   Add any necessary environment variables as required by the project.
-   Common variables might include:
-   PORT= 3000
-   MONGO_URI= "localhost:3000"
+   - Create a .env file in the root directory.
+   - Add any necessary environment variables as required by the project.
+   - Common variables might include:
+   - PORT= 3000
+   - MONGO_URI= "localhost:3000"
 
 5. **Run the project**
-   npm start
-   npm run dev
+   - npm start
+   - npm run dev
